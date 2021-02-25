@@ -1,68 +1,64 @@
-import React, { useState } from "react";
-import loginImage from "../../assets/images/login.svg";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react'
+import loginImage from '../../assets/images/login.svg'
+import { Link } from 'react-router-dom'
 
-import "./Auth.scss";
+import { useDispatch } from 'react-redux'
+import { login } from '../../store/actions/auth'
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import './Auth.scss'
 
-  const submitForm = (e) => {
-    e.preventDefault();
+const Login = ({ history }) => {
 
-    axios
-      .post("http:localhost:3000/login", { email, password })
-      .then((res) => {
-        console.log("res", res);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+    const dispatch = useDispatch()
 
-    console.log({ email, password });
-  };
+    const [email, setEmail] = useState('sam.smith@gmail.com')
+    const [password, setPassword] = useState('secret')
 
-  return (
-    <div id="auth-container">
-      <div id="auth-card"></div>
-      <div className="card-shaddow">
-        <div id="image-section">
-          <img src={loginImage} alt="Login" />
-        </div>
-        <div id="form-section">
-          <h2>Welcome Back!</h2>
-          <form onSubmit={submitForm}>
-            <div className="input-field mb-1">
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required="required"
-                type="text"
-                placeholder="Email"
-              ></input>
+    const submitForm = (e) => {
+        e.preventDefault()
+
+        dispatch(login({ email, password }, history))
+    }
+
+    return (
+        <div id='auth-container'>
+            <div id='auth-card'>
+                <div className='card-shadow'>
+                    <div id='image-section'>
+                        <img src={loginImage} alt='Login' />
+                    </div>
+
+                    <div id='form-section'>
+                        <h2>Welcome back</h2>
+
+                        <form onSubmit={submitForm}>
+                            <div className='input-field mb-1'>
+                                <input
+                                    onChange={e => setEmail(e.target.value)}
+                                    value={email}
+                                    required='required'
+                                    type='text'
+                                    placeholder='Email' />
+                            </div>
+
+                            <div className='input-field mb-2'>
+                                <input
+                                    onChange={e => setPassword(e.target.value)}
+                                    value={password}
+                                    required='required'
+                                    type='password'
+                                    placeholder='Password' />
+                            </div>
+
+                            <button>LOGIN</button>
+                        </form>
+
+                        <p>Don't have an account? <Link to='/register'>Register</Link></p>
+                    </div>
+                </div>
             </div>
-            <div className="input-field mb-2">
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                required="required"
-                type="password"
-                placeholder="Password"
-              ></input>
-            </div>
-            <button>LOGIN</button>
-          </form>
-
-          <p>
-            {" "}
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
         </div>
-      </div>
-    </div>
-  );
-};
+    );
+}
 
-export default Login;
+export default Login

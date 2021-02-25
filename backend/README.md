@@ -1,2 +1,5 @@
 # jchat
- FSA Stackathon Project
+
+FSA Stackathon Project
+
+Run 'npm start'
