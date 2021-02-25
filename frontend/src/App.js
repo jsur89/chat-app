@@ -5,6 +5,7 @@ import Chat from "./components/Chat/Chat";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+//this line below should be pointing to an App.scss file
 import "./App.css";
 
 function App() {
